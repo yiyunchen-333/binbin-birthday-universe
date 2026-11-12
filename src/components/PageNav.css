@@ -1,0 +1,49 @@
+.page-nav-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.page-nav-frame {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  container-type: inline-size;
+}
+
+.page-nav {
+  position: absolute;
+  right: 1.45rem;
+  bottom: 1.2rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.page-nav-btn {
+  margin: 0;
+  padding: 0.05em 0.12em;
+  border: 0;
+  background: none;
+  font-family: var(--font-en), serif;
+  font-size: clamp(1.05rem, 2.4cqi, 1.55rem);
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(247, 236, 242, 0.78);
+  text-shadow: 0 0 12px rgba(255, 222, 236, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.page-nav-btn:hover:not(:disabled) {
+  color: #fff;
+}
+
+.page-nav-btn:disabled {
+  color: rgba(247, 236, 242, 0.22);
+  cursor: default;
+}

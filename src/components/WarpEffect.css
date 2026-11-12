@@ -1,0 +1,58 @@
+.warp-root {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: transparent;
+  pointer-events: none;
+}
+
+.warp-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.warp-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  margin: 0;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.36),
+    0 0 24px rgba(255, 220, 230, 0.22);
+  animation: warp-line 8.5s linear forwards;
+}
+
+@keyframes warp-line {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+
+  44% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  88% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

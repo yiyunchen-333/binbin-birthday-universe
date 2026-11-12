@@ -1,0 +1,50 @@
+:root {
+  --font-zh: 'Noto Serif SC', serif;
+  --font-en: 'Cormorant Garamond', serif;
+  --letter-space: 0.15em;
+  --glow-text: 0 0 16px rgba(255, 222, 236, 0.28),
+    0 0 42px rgba(168, 72, 110, 0.18);
+  --nebula: url('/background-image.jpg');
+
+  font-family: var(--font-en), var(--font-zh);
+  font-weight: 300;
+  letter-spacing: var(--letter-space);
+  color: #f3e6ee;
+  background: #000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background: #000;
+}
+
+h1,
+h2,
+h3,
+p,
+button {
+  font-family: inherit;
+  letter-spacing: inherit;
+  text-shadow: var(--glow-text);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}

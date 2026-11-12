@@ -1,0 +1,47 @@
+.music-toggle-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.music-toggle-frame {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+}
+
+.music-toggle {
+  position: absolute;
+  top: 1.35rem;
+  left: 1.6rem;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-en), serif;
+  font-size: 0.31rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247, 236, 242, 0.62);
+  text-shadow: 0 0 12px rgba(255, 222, 236, 0.2);
+  pointer-events: none;
+}
+
+.music-toggle-state {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(247, 236, 242, 0.88);
+  cursor: pointer;
+  pointer-events: auto;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: inherit;
+}
+
+.music-toggle-state:hover {
+  color: #fff;
+}

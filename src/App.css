@@ -1,0 +1,49 @@
+.app-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.app-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.app-layer-page0 {
+  z-index: 9;
+}
+
+.app-layer-page3 {
+  z-index: 1;
+  transform-origin: center center;
+}
+
+.app-layer-page4 {
+  z-index: 3;
+  transform-origin: center center;
+}
+
+.app-layer-page5 {
+  z-index: 4;
+}
+
+.app-layer-page6 {
+  z-index: 5;
+}
+
+.app-layer-page7 {
+  z-index: 6;
+}
+
+.app-layer-page8 {
+  z-index: 7;
+}
+
+.app-layer-page9 {
+  z-index: 8;
+}
+
