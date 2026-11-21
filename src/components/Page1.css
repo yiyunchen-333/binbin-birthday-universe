@@ -33,11 +33,11 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: blur(10px) brightness(0.6) saturate(0.9) contrast(1.04);
+  filter: none;
 }
 
 .page1-veil {
-  background: rgba(26, 5, 16, 0.28);
+  background: rgba(26, 5, 16, 0.12);
 }
 
 .page1-depth {

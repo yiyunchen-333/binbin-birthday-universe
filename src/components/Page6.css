@@ -30,11 +30,11 @@
 .page6-bg {
   inset: -24px;
   background: #000 var(--nebula) center / cover no-repeat;
-  filter: blur(10px) brightness(0.6) saturate(0.9) contrast(1.04);
+  filter: none;
 }
 
 .page6-dim {
-  background: rgba(10, 2, 5, 0.4);
+  background: rgba(10, 2, 5, 0.16);
 }
 
 .page6-copy,
