@@ -24,11 +24,11 @@ export function Page1() {
           animate={{
             filter: bursting
               ? [
-                  'blur(10px) brightness(0.6) saturate(0.9) contrast(1.04)',
-                  'blur(4px) brightness(0.5) saturate(0.55) contrast(1.06)',
-                  'blur(2px) brightness(0.42) saturate(0.4) contrast(1.08)',
+                  'brightness(0.66) saturate(1.35) contrast(1.06)',
+                  'brightness(0.48) saturate(0.7) contrast(1.06)',
+                  'brightness(0.4) saturate(0.42) contrast(1.08)',
                 ]
-              : 'blur(10px) brightness(0.6) saturate(0.9) contrast(1.04)',
+              : 'brightness(0.66) saturate(1.35) contrast(1.06)',
           }}
           transition={
             bursting ? { duration: 3.5, times: [0, 0.5 / 3.5, 1], ease: 'linear' } : { duration: 0 }

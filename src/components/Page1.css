@@ -33,11 +33,13 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: none;
+  filter: brightness(0.66) saturate(1.35) contrast(1.06);
 }
 
 .page1-veil {
-  background: rgba(26, 5, 16, 0.12);
+  background: #6a1428;
+  mix-blend-mode: multiply;
+  opacity: 0.42;
 }
 
 .page1-depth {
