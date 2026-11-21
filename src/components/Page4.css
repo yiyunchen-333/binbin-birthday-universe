@@ -20,6 +20,7 @@
 }
 
 .page4-bg,
+.page4-wine,
 .page4-dim {
   position: absolute;
   inset: 0;
@@ -28,12 +29,20 @@
 
 .page4-bg {
   inset: -24px;
-  background: #000 var(--nebula) center / cover no-repeat;
-  filter: none;
+  background: #120208 var(--nebula) center / cover no-repeat;
+  filter: contrast(1.02) brightness(1.05) saturate(0.95);
+}
+
+.page4-wine {
+  background: #f3c4d4;
+  mix-blend-mode: color;
+  opacity: 0.72;
 }
 
 .page4-dim {
-  background: rgba(10, 2, 5, 0.16);
+  background: #5a3040;
+  mix-blend-mode: multiply;
+  opacity: 0.18;
 }
 
 .page4-copy,

@@ -120,6 +120,7 @@ export function Page4() {
     <section className="page4" aria-label="Page 4">
       <div className="page4-stage">
         <div className="page4-bg" aria-hidden="true" />
+        <div className="page4-wine" aria-hidden="true" />
         <div className="page4-dim" aria-hidden="true" />
 
         <div className={warping ? 'page4-copy is-gone' : 'page4-copy'}>

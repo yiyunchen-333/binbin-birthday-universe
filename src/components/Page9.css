@@ -27,18 +27,20 @@
 
 .page9-bg {
   inset: -24px;
-  background: #000 var(--nebula) center / cover no-repeat;
-  filter: saturate(1.15) contrast(1.05);
+  background: #120208 var(--nebula) center / cover no-repeat;
+  filter: contrast(1.02) brightness(1.05) saturate(0.95);
 }
 
 .page9-wine {
-  background: #6e1630;
+  background: #f3c4d4;
   mix-blend-mode: color;
-  opacity: 0.28;
+  opacity: 0.72;
 }
 
 .page9-dim {
-  background: rgba(28, 0, 8, 0.18);
+  background: #5a3040;
+  mix-blend-mode: multiply;
+  opacity: 0.18;
 }
 
 .page9-lines {

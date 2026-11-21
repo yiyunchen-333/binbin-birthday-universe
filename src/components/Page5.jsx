@@ -118,6 +118,7 @@ export function Page5() {
     <section className="page5" aria-label="Page 5">
       <div className="page5-stage">
         <div className="page5-bg" aria-hidden="true" />
+        <div className="page5-wine" aria-hidden="true" />
         <div className="page5-dim" aria-hidden="true" />
         <SlowStars key="edge" />
         <div className="page5-line">

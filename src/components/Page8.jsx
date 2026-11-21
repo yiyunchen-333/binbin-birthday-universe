@@ -81,6 +81,7 @@ export function Page8() {
     <section className="page8" aria-label="Page 8">
       <div className="page8-stage">
         <div className="page8-bg" aria-hidden="true" />
+        <div className="page8-wine" aria-hidden="true" />
         <div className="page8-dim" aria-hidden="true" />
 
         <div className="page8-scroll" ref={scrollRef} tabIndex={-1}>

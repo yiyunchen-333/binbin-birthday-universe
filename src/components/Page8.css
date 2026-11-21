@@ -17,6 +17,7 @@
 }
 
 .page8-bg,
+.page8-wine,
 .page8-dim {
   position: absolute;
   inset: 0;
@@ -25,12 +26,20 @@
 
 .page8-bg {
   inset: -24px;
-  background: #000 var(--nebula) center / cover no-repeat;
-  filter: none;
+  background: #120208 var(--nebula) center / cover no-repeat;
+  filter: contrast(1.02) brightness(1.05) saturate(0.95);
+}
+
+.page8-wine {
+  background: #f3c4d4;
+  mix-blend-mode: color;
+  opacity: 0.72;
 }
 
 .page8-dim {
-  background: rgba(10, 2, 5, 0.16);
+  background: #5a3040;
+  mix-blend-mode: multiply;
+  opacity: 0.18;
 }
 
 .page8-scroll {

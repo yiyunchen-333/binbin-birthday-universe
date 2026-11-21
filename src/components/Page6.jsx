@@ -122,6 +122,7 @@ export function Page6() {
     <section className="page6" aria-label="Page 6">
       <div className="page6-stage">
         <div className="page6-bg" aria-hidden="true" />
+        <div className="page6-wine" aria-hidden="true" />
         <div className="page6-dim" aria-hidden="true" />
 
         <header className="page6-copy">
