@@ -29,7 +29,7 @@
 .page1-bg {
   inset: -24px;
   background: #120208 var(--nebula) center / cover no-repeat;
-  filter: blur(8px) contrast(1.1) brightness(0.74) saturate(0.85);
+  filter: blur(8px) contrast(1.1) brightness(0.58) saturate(0.85);
 }
 
 .page1-veil {
@@ -44,7 +44,7 @@
   pointer-events: none;
   background: #4a1020;
   mix-blend-mode: multiply;
-  opacity: 0.42;
+  opacity: 0.55;
 }
 
 .page1-depth {

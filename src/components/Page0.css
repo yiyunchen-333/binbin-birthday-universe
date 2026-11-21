@@ -29,7 +29,7 @@
 .page0-bg {
   inset: -24px;
   background: #120208 var(--nebula) center / cover no-repeat;
-  filter: blur(8px) contrast(1.1) brightness(0.74) saturate(0.85);
+  filter: blur(8px) contrast(1.1) brightness(0.58) saturate(0.85);
 }
 
 .page0-wine {
@@ -41,7 +41,7 @@
 .page0-dim {
   background: #4a1020;
   mix-blend-mode: multiply;
-  opacity: 0.42;
+  opacity: 0.55;
 }
 
 .page0-card {
