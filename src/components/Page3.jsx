@@ -218,12 +218,14 @@ const ORBIT_SECONDS = 48
 const CENTER_Y = 0.5
 const PLANE = -8
 
+const SCENE = 0.7
+
 const ORBITS = [
-  { rx: 0.34, ry: 0.226, rot: PLANE },
-  { rx: 0.38, ry: 0.253, rot: PLANE },
+  { rx: 0.34 * SCENE, ry: 0.226 * SCENE, rot: PLANE },
+  { rx: 0.38 * SCENE, ry: 0.253 * SCENE, rot: PLANE },
 ]
 
-const PLANET_PATH = { rx: 0.36, ry: 0.24, rot: PLANE }
+const PLANET_PATH = { rx: 0.36 * SCENE, ry: 0.24 * SCENE, rot: PLANE }
 
 const NOTES = [
   '202604 · 相遇',

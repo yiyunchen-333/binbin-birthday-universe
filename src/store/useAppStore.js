@@ -4,6 +4,8 @@ export const useAppStore = create((set) => ({
   currentPage: 0,
   starGone: false,
   musicOn: true,
+  quizPassed: false,
+  passQuiz: () => set({ quizPassed: true }),
   beginBurst: () => set({ currentPage: 2, starGone: true }),
   setCurrentPage: (currentPage) =>
     set({

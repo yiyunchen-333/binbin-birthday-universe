@@ -30,7 +30,7 @@
   border: 0;
   background: none;
   font-family: var(--font-en), serif;
-  font-size: clamp(1.05rem, 2.4cqi, 1.55rem);
+  font-size: 1.05rem;
   font-weight: 300;
   line-height: 1;
   color: rgba(247, 236, 242, 0.78);

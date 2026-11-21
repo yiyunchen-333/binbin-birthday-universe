@@ -24,9 +24,14 @@
 }
 
 .page8-bg {
-  inset: -24px;
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  height: 36%;
+  transform: translate(-50%, -50%) scale(3.15);
   background: #000 var(--nebula) center / cover no-repeat;
-  filter: blur(10px) brightness(0.6) saturate(0.9) contrast(1.04);
+  filter: blur(5px) brightness(0.6) saturate(0.9) contrast(1.04);
 }
 
 .page8-dim {
@@ -62,7 +67,7 @@
 .page8-letter p {
   margin: 0 0 1.35em;
   font-family: var(--font-zh);
-  font-size: clamp(0.29rem, 0.64cqi, 0.39rem);
+  font-size: 0.87rem;
   font-weight: 300;
   line-height: 2.15;
   letter-spacing: 0.14em;
@@ -74,7 +79,7 @@
 .page8-salute {
   font-family: var(--font-en) !important;
   font-style: italic;
-  font-size: clamp(0.41rem, 0.85cqi, 0.525rem) !important;
+  font-size: 1.23rem !important;
   letter-spacing: 0.08em !important;
   text-align: left !important;
 }
@@ -101,13 +106,13 @@
   justify-content: center;
   gap: 0.4em;
   width: 100%;
-  margin: 4.8em 0 0.4em;
+  margin: 2.4em 0 0.2em;
   padding: 0;
   border: 0;
   background: none;
   font-family: var(--font-en);
   font-style: italic;
-  font-size: clamp(0.42rem, 0.92cqi, 0.56rem);
+  font-size: 0.84rem;
   font-weight: 400;
   letter-spacing: 0.18em;
   color: rgba(255, 246, 248, 0.72);

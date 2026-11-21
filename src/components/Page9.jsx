@@ -6,10 +6,10 @@ import './Page9.css'
 const VB = { w: 1600, h: 900 }
 
 const STARS = {
-  left: { id: 'left', x: 492, y: 340, scale: 1 },
-  right: { id: 'right', x: 1108, y: 340, scale: 1 },
-  bottom: { id: 'bottom', x: 800, y: 652, scale: 1 },
-  wish: { id: 'wish', x: 800, y: 374, scale: 0.88 },
+  left: { id: 'left', x: VB.w * 0.35, y: VB.h * 0.4, scale: 1 },
+  right: { id: 'right', x: VB.w * 0.65, y: VB.h * 0.4, scale: 1 },
+  bottom: { id: 'bottom', x: VB.w * 0.5, y: VB.h * 0.65, scale: 1 },
+  wish: { id: 'wish', x: VB.w * 0.5, y: VB.h * 0.4 + 28, scale: 0.82 },
 }
 
 function point(x, y, extra = {}) {
@@ -28,7 +28,7 @@ function trapezoidCap(from, to, idPrefix) {
     nx = -nx
     ny = -ny
   }
-  const offset = 110
+  const offset = len * 0.36
   const ratio = 0.34
   const midX = (from.x + to.x) / 2 + nx * offset
   const midY = (from.y + to.y) / 2 + ny * offset
@@ -70,31 +70,21 @@ const PINS = [
   RIGHT_OUTER,
 ]
 
-const TRIANGLE = [STARS.left, STARS.right, STARS.bottom]
-
-const FIELD = [
-  point(210, 200, { id: 'field-1', scale: 0.44 }),
-  point(580, 128, { id: 'field-2', scale: 0.38 }),
-  point(1020, 128, { id: 'field-3', scale: 0.4 }),
-  point(1390, 200, { id: 'field-4', scale: 0.46 }),
-  point(1470, 500, { id: 'field-5', scale: 0.42 }),
-  point(1180, 780, { id: 'field-6', scale: 0.36 }),
-  point(420, 780, { id: 'field-7', scale: 0.4 }),
-  point(130, 500, { id: 'field-8', scale: 0.48 }),
-  point(330, 545, { id: 'field-9', scale: 0.42 }),
-  point(1270, 545, { id: 'field-10', scale: 0.42 }),
+const DECOYS = [
+  point(468, 246, { id: 'decoy-1', scale: 0.4 }),
+  point(1136, 268, { id: 'decoy-2', scale: 0.36 }),
+  point(688, 458, { id: 'decoy-3', scale: 0.48 }),
+  point(912, 432, { id: 'decoy-4', scale: 0.42 }),
+  point(452, 458, { id: 'decoy-5', scale: 0.38 }),
+  point(1148, 492, { id: 'decoy-6', scale: 0.46 }),
+  point(800, 502, { id: 'decoy-7', scale: 0.34 }),
 ]
 
-function spinFor(id) {
-  let hash = 2166136261
-  for (const char of id) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0
-  return {
-    rotate: hash % 2 === 0 ? 360 : -360,
-    duration: 18 + (hash % 31),
-    pulse: 3.1 + ((hash >>> 5) % 29) / 10,
-    delay: ((hash >>> 11) % 37) / 10,
-  }
-}
+const PIN_LAYER = [...PINS, ...DECOYS]
+
+const TRIANGLE = [STARS.left, STARS.right, STARS.bottom]
+
+const GRID_STARS = createGridField()
 
 function to(star) {
   return `${star.x} ${star.y}`
@@ -114,7 +104,10 @@ const HEART_D = [
   `Z`,
 ].join(' ')
 
-const HEART_CENTER = { x: 800, y: 470 }
+const HEART_CENTER = {
+  x: (STARS.left.x + STARS.right.x + STARS.bottom.x) / 3,
+  y: (STARS.left.y + STARS.right.y + STARS.bottom.y) / 3,
+}
 const HEART_RING = [
   STARS.wish,
   RIGHT_CAP.nearTo,
@@ -138,6 +131,34 @@ const BURST_EASE_IN = [0.45, 0, 0.85, 1]
 
 const fade = { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
 const fadeOut = { duration: 0.32, ease: 'easeOut' }
+
+function createGridField() {
+  const rand = mulberry32(0x9e3779b9)
+  const cols = 10
+  const rows = 10
+  const reserved = new Set(['3,4', '6,4', '5,4', '5,6'])
+  const cells = []
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      if (!reserved.has(`${col},${row}`)) cells.push([col, row])
+    }
+  }
+  for (let index = cells.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(rand() * (index + 1))
+    ;[cells[index], cells[swap]] = [cells[swap], cells[index]]
+  }
+
+  return cells.slice(0, 60).map(([col, row], index) => {
+    const star = {
+      id: `grid-${index}`,
+      x: (col + 0.2 + rand() * 0.6) * 10,
+      y: (row + 0.2 + rand() * 0.6) * 10,
+    }
+    if (index < 36) return { ...star, layer: 'far', opacity: 0.1 + rand() * 0.1 }
+    if (index < 54) return { ...star, layer: 'mid', size: 8, opacity: 0.4 }
+    return { ...star, layer: 'near', size: 16, opacity: 0.8 }
+  })
+}
 
 function mulberry32(seed) {
   let value = seed
@@ -187,15 +208,11 @@ function CrossStar({
   flare,
   onClick,
   disabled,
-  delay = 0,
   label,
   labelPlace = 'below',
   decorative = false,
-  spinId = '',
-  field = false,
 }) {
-  const spin = spinFor(spinId || label || 'star')
-  const className = `page9-spark${lit ? ' is-on' : ''}${boosted ? ' is-boosted' : ''}${flare ? ' is-flare' : ''}${labelPlace === 'above' ? ' label-above' : ''}${decorative ? ' is-pin' : ''}${field ? ' is-field' : ''}`
+  const className = `page9-spark${lit ? ' is-on' : ''}${boosted ? ' is-boosted' : ''}${flare ? ' is-flare' : ''}${labelPlace === 'above' ? ' label-above' : ''}${decorative ? ' is-pin' : ''}`
   const Tag = decorative ? 'span' : 'button'
   return (
     <Tag
@@ -207,24 +224,10 @@ function CrossStar({
       onClick={decorative ? undefined : onClick}
     >
       <span className="page9-star">
-        <motion.span
-          className="page9-star-spin"
-          animate={{ rotate: spin.rotate }}
-          transition={{ duration: spin.duration, repeat: Infinity, ease: 'linear' }}
-        >
-          <motion.span
-            className="page9-star-axis page9-star-axis-v"
-            animate={{ scaleY: [0.52, 1, 0.52] }}
-            transition={{ duration: spin.pulse, repeat: Infinity, ease: 'easeInOut', delay: delay + spin.delay }}
-          />
-          <motion.span
-            className="page9-star-axis page9-star-axis-h"
-            animate={{ scaleX: [1, 0.52, 1] }}
-            transition={{ duration: spin.pulse, repeat: Infinity, ease: 'easeInOut', delay: delay + spin.delay }}
-          />
-          <span className="page9-star-corners" />
-          <span className="page9-star-core" />
-        </motion.span>
+        <span className="page9-star-axis page9-star-axis-v" />
+        <span className="page9-star-axis page9-star-axis-h" />
+        <span className="page9-star-corners" />
+        <span className="page9-star-core" />
       </span>
       {label && <span className="page9-star-hover">{label}</span>}
     </Tag>
@@ -453,6 +456,7 @@ export function Page9() {
     <section className="page9" aria-label="Page 9">
       <div className="page9-stage">
         <div className="page9-bg" aria-hidden="true" />
+        <div className="page9-wine" aria-hidden="true" />
         <div className="page9-dim" aria-hidden="true" />
 
         <svg className="page9-lines" viewBox={`0 0 ${VB.w} ${VB.h}`} aria-hidden="true">
@@ -517,19 +521,37 @@ export function Page9() {
           )}
         </AnimatePresence>
 
-        {FIELD.map((star, index) => (
-          <div key={star.id} className="page9-node page9-node-field" style={starStyle(star)}>
-            <motion.div
-              className="page9-node-breathe"
-              animate={{ opacity: boosted ? 0.92 : [0.52, 0.86, 0.52] }}
-              transition={{ duration: 2.8 + index * 0.17, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <CrossStar decorative field spinId={star.id} delay={index * 0.11} />
-            </motion.div>
-          </div>
-        ))}
+        <div className="page9-depth" aria-hidden="true">
+          {GRID_STARS.map((star) =>
+            star.layer === 'far' ? (
+              <span
+                key={star.id}
+                className="page9-dot"
+                style={{ left: `${star.x}%`, top: `${star.y}%`, opacity: star.opacity }}
+              />
+            ) : (
+              <span
+                key={star.id}
+                className="page9-dust"
+                style={{
+                  left: `${star.x}%`,
+                  top: `${star.y}%`,
+                  opacity: star.opacity,
+                  '--star-scale': star.layer === 'near' ? 0.22 : 0.12,
+                }}
+              >
+                <span className="page9-star">
+                  <span className="page9-star-axis page9-star-axis-v" />
+                  <span className="page9-star-axis page9-star-axis-h" />
+                  <span className="page9-star-corners" />
+                  <span className="page9-star-core" />
+                </span>
+              </span>
+            ),
+          )}
+        </div>
 
-        {PINS.map((star, index) => (
+        {PIN_LAYER.map((star, index) => (
           <div key={star.id} className="page9-node page9-node-pin" style={starStyle(star)}>
             <motion.div
               className="page9-node-breathe"
@@ -545,18 +567,16 @@ export function Page9() {
                 boosted={boosted}
                 flare={flareId === star.id}
                 decorative
-                spinId={star.id}
-                delay={index * 0.25}
               />
             </motion.div>
           </div>
         ))}
 
         {TRIANGLE.map((star, index) => (
-          <div key={star.id} className="page9-node" style={starStyle(star)}>
+          <div key={star.id} className="page9-node page9-node-hero" style={starStyle(star)}>
             <motion.div
               className="page9-node-breathe"
-              animate={{ opacity: boosted || flareId === star.id ? 1 : [0.72, 1, 0.72] }}
+              animate={{ opacity: boosted || flareId === star.id ? 1 : [0.9, 1, 0.9] }}
               transition={
                 boosted || flareId === star.id
                   ? { duration: 0.22 }
@@ -568,8 +588,6 @@ export function Page9() {
                 boosted={boosted}
                 flare={flareId === star.id}
                 disabled={locked}
-                delay={index * 0.4}
-                spinId={star.id}
                 label={BLESSINGS[star.id].hover}
                 labelPlace={star.id === 'bottom' ? 'above' : 'below'}
                 onClick={() => spark(star)}
@@ -603,8 +621,6 @@ export function Page9() {
               boosted={boosted}
               flare={flareId === STARS.wish.id}
               disabled={locked || !wishArmed}
-              delay={0.2}
-              spinId={STARS.wish.id}
               onClick={() => spark(STARS.wish)}
             />
           </motion.div>
@@ -615,12 +631,15 @@ export function Page9() {
             <motion.p
               key="wish-hint"
               className="page9-wish-hint"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={fadeOut}
             >
-              点击点亮最后的心愿
+              轻触点亮最后的心愿
+              <span className="page9-foot-arrow" aria-hidden="true">
+                ↗
+              </span>
             </motion.p>
           )}
         </AnimatePresence>
@@ -684,16 +703,34 @@ export function Page9() {
 
         <AnimatePresence>
           {phase === 'finale' && (
-            <motion.p
-              key="finale-zh"
-              className="page9-finale-zh"
-              initial={{ opacity: 0, y: 8 }}
+            <motion.div
+              key="finale-top"
+              className="page9-finale-top"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="page9-finale-ever">Evermore</p>
+              <p className="page9-finale-zh">此后，一直为你亮着</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {phase === 'finale' && (
+            <motion.div
+              key="finale-gifts"
+              className="page9-finale-gifts"
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
             >
-              此后，一直为你亮着
-            </motion.p>
+              <p className="page9-finale-gift">这是我要给你的，</p>
+              <p className="page9-finale-gift">宇宙级别的浪漫。</p>
+              <p className="page9-finale-en">all of this, for you.</p>
+            </motion.div>
           )}
         </AnimatePresence>
 
@@ -707,10 +744,6 @@ export function Page9() {
               exit={{ opacity: 0 }}
               transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="page9-finale-ever">Evermore</p>
-              <p className="page9-finale-gift">这是我要给你的，</p>
-              <p className="page9-finale-gift">宇宙级别的浪漫。</p>
-              <p className="page9-finale-en">all of this, for you.</p>
               <button type="button" className="page9-reset" onClick={reset}>
                 再看一次星光 <span aria-hidden="true">↺</span>
               </button>

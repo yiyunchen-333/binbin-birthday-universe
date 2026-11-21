@@ -16,6 +16,7 @@ function normalize(value) {
 
 export function Page0() {
   const setCurrentPage = useAppStore((state) => state.setCurrentPage)
+  const passQuiz = useAppStore((state) => state.passQuiz)
   const [blank, setBlank] = useState('')
   const [result, setResult] = useState(null)
   const sfxRef = useRef(null)
@@ -37,6 +38,7 @@ export function Page0() {
     setResult(ok ? 'bingo' : 'no')
     const audio = playSfx(ok ? SFX.bingo : SFX.no)
     if (!ok) return
+    passQuiz()
     let gone = false
     const go = () => {
       if (gone) return

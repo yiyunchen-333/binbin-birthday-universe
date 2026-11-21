@@ -168,10 +168,10 @@ export function WarpEffect({ onDone }) {
       context.shadowBlur = 0
 
       if (elapsed > 7900) {
-        root.style.opacity = String(Math.max(0, 1 - (elapsed - 7900) / 600))
+        root.style.opacity = String(Math.max(0, 1 - (elapsed - 7900) / 800))
       }
 
-      if (elapsed >= DURATION) {
+      if (elapsed >= 8700) {
         if (!finished) {
           finished = true
           onDoneRef.current?.()

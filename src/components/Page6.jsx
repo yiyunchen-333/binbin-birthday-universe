@@ -41,6 +41,73 @@ function tierGeometry(tier) {
 }
 
 const CAKE = TIERS.map(tierGeometry)
+const STAR_POINTS = CAKE.flatMap((tier) => [...tier.top, ...tier.bottom])
+
+const SPARKLES = new Map([
+  [4, 7],
+  [10, 6.2],
+  [27, 8.5],
+  [34, 7.4],
+  [47, 8],
+  [60, 11],
+  [91, 10],
+])
+
+function Sparkle({ x, y, arm }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <g transform={`scale(${arm})`}>
+        <line
+          x1="-1"
+          y1="0"
+          x2="1"
+          y2="0"
+          stroke="url(#page6-ray-h)"
+          strokeWidth="0.6"
+          vectorEffect="non-scaling-stroke"
+        />
+        <line
+          x1="0"
+          y1="-1"
+          x2="0"
+          y2="1"
+          stroke="url(#page6-ray-v)"
+          strokeWidth="0.6"
+          vectorEffect="non-scaling-stroke"
+        />
+        <g opacity="0.55" transform="rotate(45)">
+          <line
+            x1="-0.25"
+            y1="0"
+            x2="0.25"
+            y2="0"
+            stroke="url(#page6-ray-dh)"
+            strokeWidth="0.4"
+            vectorEffect="non-scaling-stroke"
+          />
+          <line
+            x1="0"
+            y1="-0.25"
+            x2="0"
+            y2="0.25"
+            stroke="url(#page6-ray-dv)"
+            strokeWidth="0.4"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
+      </g>
+      <circle r="0.55" fill="#fff" filter="url(#page6-core)" />
+      <circle r="0.32" fill="#fff" />
+    </g>
+  )
+}
+
+function flamePath(x, y) {
+  const tip = y - 6
+  const base = y + 9
+  const rx = 5.6
+  return `M ${x} ${tip} C ${x + rx} ${tip + 6.8} ${x + rx} ${tip + 11.7} ${x} ${base} C ${x - rx} ${tip + 11.7} ${x - rx} ${tip + 6.8} ${x} ${tip} Z`
+}
 
 export function Page6() {
   const setCurrentPage = useAppStore((state) => state.setCurrentPage)
@@ -78,6 +145,37 @@ export function Page6() {
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
+              <filter id="page6-core" x="-400%" y="-400%" width="900%" height="900%">
+                <feGaussianBlur stdDeviation="0.45" />
+              </filter>
+              <linearGradient id="page6-ray-h" gradientUnits="userSpaceOnUse" x1="-1" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+                <stop offset="16%" stopColor="#fff" stopOpacity="0.15" />
+                <stop offset="50%" stopColor="#fff" />
+                <stop offset="84%" stopColor="#fff" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="page6-ray-v" gradientUnits="userSpaceOnUse" x1="0" y1="-1" x2="0" y2="1">
+                <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+                <stop offset="16%" stopColor="#fff" stopOpacity="0.15" />
+                <stop offset="50%" stopColor="#fff" />
+                <stop offset="84%" stopColor="#fff" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="page6-ray-dh" gradientUnits="userSpaceOnUse" x1="-0.25" y1="0" x2="0.25" y2="0">
+                <stop offset="0%" stopColor="#ffe6f0" stopOpacity="0" />
+                <stop offset="22%" stopColor="#ffe6f0" stopOpacity="0.12" />
+                <stop offset="50%" stopColor="#fff" stopOpacity="0.7" />
+                <stop offset="78%" stopColor="#ffe6f0" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#ffe6f0" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="page6-ray-dv" gradientUnits="userSpaceOnUse" x1="0" y1="-0.25" x2="0" y2="0.25">
+                <stop offset="0%" stopColor="#ffe6f0" stopOpacity="0" />
+                <stop offset="22%" stopColor="#ffe6f0" stopOpacity="0.12" />
+                <stop offset="50%" stopColor="#fff" stopOpacity="0.7" />
+                <stop offset="78%" stopColor="#ffe6f0" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#ffe6f0" stopOpacity="0" />
+              </linearGradient>
             </defs>
 
             <g fill="none" stroke="rgba(255, 246, 248, 0.42)" strokeWidth="0.7" strokeLinejoin="round">
@@ -104,9 +202,18 @@ export function Page6() {
             </g>
 
             <g filter="url(#page6-star)" fill="#fff">
-              {CAKE.flatMap((tier) => [...tier.top, ...tier.bottom]).map(([x, y], index) => (
-                <circle key={index} cx={x} cy={y} r={index % 5 === 0 ? 1.7 : 1.15} />
-              ))}
+              {STAR_POINTS.map(([x, y], index) =>
+                SPARKLES.has(index) ? null : (
+                  <circle key={index} cx={x} cy={y} r={index % 5 === 0 ? 1.7 : 1.15} />
+                ),
+              )}
+            </g>
+
+            <g>
+              {[...SPARKLES].map(([index, arm]) => {
+                const [x, y] = STAR_POINTS[index]
+                return <Sparkle key={index} x={x} y={y} arm={arm} />
+              })}
             </g>
 
             {CANDLES.map((candle, index) => (
@@ -124,12 +231,10 @@ export function Page6() {
                       transition={{ duration: 1.05, ease: 'easeOut', delay: wisp * 0.05 }}
                     />
                   ))}
-                <motion.circle
-                  cx={candle.x}
-                  cy={candle.top}
-                  r={6.5}
+                <motion.path
+                  d={flamePath(candle.x, candle.top)}
                   fill="url(#page6-flame)"
-                  style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+                  style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
                   animate={
                     lit[index]
                       ? { scale: [1, 1.16, 0.94, 1.08], opacity: [0.88, 1, 0.8, 1] }
@@ -154,24 +259,23 @@ export function Page6() {
               </g>
             ))}
           </svg>
+          <div className="page6-wish">
+            <p>
+              许个愿 · 轻触星光吹灭蜡烛
+              <span className="page6-foot-arrow" aria-hidden="true">↗</span>
+            </p>
+            <p className="page6-foot-en">make a wish · touch to blow out the candles</p>
+            <button
+              type="button"
+              className={ready ? 'page6-next is-ready' : 'page6-next'}
+              disabled={!ready}
+              onClick={() => setCurrentPage(8)}
+            >
+              for you
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
         </div>
-
-        <footer className="page6-foot">
-          <p>
-            许个愿 · 轻触星光吹灭蜡烛
-            <span className="page6-foot-arrow" aria-hidden="true">↗</span>
-          </p>
-          <p className="page6-foot-en">make a wish · touch to blow out the candles</p>
-          <button
-            type="button"
-            className={ready ? 'page6-next is-ready' : 'page6-next'}
-            disabled={!ready}
-            onClick={() => setCurrentPage(8)}
-          >
-            for you
-            <span aria-hidden="true">↗</span>
-          </button>
-        </footer>
       </div>
     </section>
   )

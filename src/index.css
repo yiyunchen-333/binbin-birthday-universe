@@ -1,6 +1,6 @@
 :root {
-  --font-zh: 'Noto Serif SC', serif;
-  --font-en: 'Cormorant Garamond', serif;
+  --font-zh: 'Zhuque Fangsong', serif;
+  --font-en: 'Cormorant Garamond';
   --letter-space: 0.15em;
   --glow-text: 0 0 16px rgba(255, 222, 236, 0.28),
     0 0 42px rgba(168, 72, 110, 0.18);
@@ -15,6 +15,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Zhuque Fangsong';
+  src: url('/fonts/zhuque-fangsong.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {

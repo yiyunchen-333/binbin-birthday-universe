@@ -28,9 +28,14 @@
 }
 
 .page6-bg {
-  inset: -24px;
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  height: 36%;
+  transform: translate(-50%, -50%) scale(3.15);
   background: #000 var(--nebula) center / cover no-repeat;
-  filter: blur(10px) brightness(0.6) saturate(0.9) contrast(1.04);
+  filter: blur(5px) brightness(0.6) saturate(0.9) contrast(1.04);
 }
 
 .page6-dim {
@@ -50,14 +55,14 @@
 
 .page6-kicker,
 .page6-sub,
-.page6-foot p,
+.page6-wish p,
 .page6-next {
   margin: 0;
 }
 
 .page6-kicker {
   font-family: var(--font-en);
-  font-size: 5px;
+  font-size: 7.5px;
   font-weight: 400;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -66,10 +71,10 @@
 }
 
 .page6-copy h1 {
-  margin: 0.28em 0 0;
+  margin: 28px 0 0;
   font-family: var(--font-en);
   font-weight: 400;
-  font-size: clamp(14px, 1.8vw, 22px);
+  font-size: 42px;
   letter-spacing: 0.08em;
   line-height: 1;
   color: #fff;
@@ -77,12 +82,12 @@
 }
 
 .page6-sub {
-  margin-top: 0.7em;
+  margin-top: 18px;
   font-family: var(--font-zh);
   font-weight: 300;
-  font-size: 2.6px;
+  font-size: 7.8px;
   letter-spacing: 0.22em;
-  color: rgba(255, 246, 248, 0.72);
+  color: rgba(255, 246, 248, 0.42);
   text-shadow: none;
 }
 
@@ -91,6 +96,7 @@
   z-index: 2;
   display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -101,8 +107,8 @@
 .page6-constellation {
   display: block;
   width: auto;
-  height: 60%;
-  max-width: 46.8%;
+  height: 30%;
+  max-width: 23.4%;
   overflow: visible;
 }
 
@@ -110,10 +116,15 @@
   cursor: pointer;
 }
 
-.page6-foot p {
+.page6-wish {
+  margin-top: 22px;
+  text-align: center;
+}
+
+.page6-wish p {
   font-family: var(--font-zh);
   font-weight: 300;
-  font-size: 3.6px;
+  font-size: 7.2px;
   letter-spacing: 0.18em;
   color: rgba(255, 246, 248, 0.62);
   text-shadow: none;
@@ -128,11 +139,11 @@
   transform: translateY(-0.06em);
 }
 
-.page6-foot p.page6-foot-en {
+.page6-wish p.page6-foot-en {
   margin-top: 0.45em;
   font-family: var(--font-en);
   font-style: italic;
-  font-size: 3.9px;
+  font-size: 7.8px;
   letter-spacing: 0.06em;
   color: rgba(255, 246, 248, 0.48);
 }
@@ -141,13 +152,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  margin-top: 1.15em;
+  margin-top: 44px;
   padding: 0;
   border: 0;
   background: none;
   font-family: var(--font-en);
   font-style: italic;
-  font-size: 10.5px;
+  font-size: 15.75px;
   letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.72);
   text-shadow: none;
