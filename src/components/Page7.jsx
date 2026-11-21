@@ -7,6 +7,7 @@ export function Page7() {
         <div className="page7-bg" aria-hidden="true" />
         <div className="page7-wine" aria-hidden="true" />
         <div className="page7-dim" aria-hidden="true" />
+        <div className="page7-shade" aria-hidden="true" />
       </div>
     </section>
   )

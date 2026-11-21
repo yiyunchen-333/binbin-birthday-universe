@@ -458,6 +458,7 @@ export function Page9() {
         <div className="page9-bg" aria-hidden="true" />
         <div className="page9-wine" aria-hidden="true" />
         <div className="page9-dim" aria-hidden="true" />
+        <div className="page9-shade" aria-hidden="true" />
 
         <svg className="page9-lines" viewBox={`0 0 ${VB.w} ${VB.h}`} aria-hidden="true">
           <defs>

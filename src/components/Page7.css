@@ -17,7 +17,8 @@
 
 .page7-bg,
 .page7-wine,
-.page7-dim {
+.page7-dim,
+.page7-shade {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -26,7 +27,7 @@
 .page7-bg {
   inset: -24px;
   background: #120208 var(--nebula) center / cover no-repeat;
-  filter: contrast(1.02) brightness(1.05) saturate(0.95);
+  filter: blur(5px) contrast(1.08) brightness(0.46) saturate(0.5);
 }
 
 .page7-wine {
@@ -39,4 +40,14 @@
   background: #5a3040;
   mix-blend-mode: multiply;
   opacity: 0.18;
+}
+
+.page7-shade {
+  z-index: 0;
+  opacity: 0.62;
+  background: radial-gradient(
+    circle at center,
+    rgba(26, 5, 16, 0.2) 0%,
+    rgba(15, 2, 8, 0.9) 100%
+  );
 }

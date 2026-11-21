@@ -124,6 +124,7 @@ export function Page6() {
         <div className="page6-bg" aria-hidden="true" />
         <div className="page6-wine" aria-hidden="true" />
         <div className="page6-dim" aria-hidden="true" />
+        <div className="page6-shade" aria-hidden="true" />
 
         <header className="page6-copy">
           <p className="page6-kicker">A LITTLE STARDUST, A WISH FOR YOU</p>

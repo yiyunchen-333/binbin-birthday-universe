@@ -120,6 +120,7 @@ export function Page5() {
         <div className="page5-bg" aria-hidden="true" />
         <div className="page5-wine" aria-hidden="true" />
         <div className="page5-dim" aria-hidden="true" />
+        <div className="page5-shade" aria-hidden="true" />
         <SlowStars key="edge" />
         <div className="page5-line">
           <span>宇宙的尽头，依旧是你</span>

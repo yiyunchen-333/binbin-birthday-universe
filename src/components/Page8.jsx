@@ -83,6 +83,7 @@ export function Page8() {
         <div className="page8-bg" aria-hidden="true" />
         <div className="page8-wine" aria-hidden="true" />
         <div className="page8-dim" aria-hidden="true" />
+        <div className="page8-shade" aria-hidden="true" />
 
         <div className="page8-scroll" ref={scrollRef} tabIndex={-1}>
           <article className="page8-letter">

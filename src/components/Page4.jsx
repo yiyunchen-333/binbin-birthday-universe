@@ -122,6 +122,7 @@ export function Page4() {
         <div className="page4-bg" aria-hidden="true" />
         <div className="page4-wine" aria-hidden="true" />
         <div className="page4-dim" aria-hidden="true" />
+        <div className="page4-shade" aria-hidden="true" />
 
         <div className={warping ? 'page4-copy is-gone' : 'page4-copy'}>
           <p className="page4-kicker">SOMEWHERE, A WORLD IS WAITING FOR YOU</p>

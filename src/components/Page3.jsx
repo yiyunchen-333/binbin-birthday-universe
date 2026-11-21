@@ -364,6 +364,7 @@ export function Page3() {
         <div className="page3-bg" aria-hidden="true" />
         <div className="page3-wine" aria-hidden="true" />
         <div className="page3-depth" aria-hidden="true" />
+        <div className="page3-shade" aria-hidden="true" />
 
         {size.w > 0 && (
           <svg className="page3-orbits" viewBox={`0 0 ${size.w} ${size.h}`} aria-hidden="true">
