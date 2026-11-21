@@ -98,7 +98,6 @@
   width: 12.6cqi;
   aspect-ratio: 1179 / 1150;
   translate: -50% -50%;
-  transform: translateZ(0);
   animation: rose-breathe-6 3s ease-in-out infinite alternate;
 }
 
