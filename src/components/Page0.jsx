@@ -53,6 +53,7 @@ export function Page0() {
     <section className="page0" aria-label="Page 0">
       <div className="page0-stage">
         <div className="page0-bg" aria-hidden="true" />
+        <div className="page0-wine" aria-hidden="true" />
         <div className="page0-dim" aria-hidden="true" />
 
         <form className="page0-card" onSubmit={submit}>

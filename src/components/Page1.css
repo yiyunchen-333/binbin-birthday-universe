@@ -28,16 +28,21 @@
 
 .page1-bg {
   inset: -24px;
-  background-color: #000;
-  background-image: var(--nebula);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  filter: brightness(0.66) saturate(1.35) contrast(1.06);
+  background: #120208 var(--nebula) center / cover no-repeat;
+  filter: blur(8px) contrast(1.1) brightness(0.74) saturate(0.85);
 }
 
 .page1-veil {
-  background: #6a1428;
+  background: #7a2240;
+  mix-blend-mode: color;
+  opacity: 1;
+}
+
+.page1-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #4a1020;
   mix-blend-mode: multiply;
   opacity: 0.42;
 }

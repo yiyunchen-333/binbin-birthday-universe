@@ -19,6 +19,7 @@
 }
 
 .page0-bg,
+.page0-wine,
 .page0-dim {
   position: absolute;
   inset: 0;
@@ -27,12 +28,18 @@
 
 .page0-bg {
   inset: -24px;
-  background: #000 var(--nebula) center / cover no-repeat;
-  filter: brightness(0.66) saturate(1.35) contrast(1.06);
+  background: #120208 var(--nebula) center / cover no-repeat;
+  filter: blur(8px) contrast(1.1) brightness(0.74) saturate(0.85);
+}
+
+.page0-wine {
+  background: #7a2240;
+  mix-blend-mode: color;
+  opacity: 1;
 }
 
 .page0-dim {
-  background: #6a1428;
+  background: #4a1020;
   mix-blend-mode: multiply;
   opacity: 0.42;
 }
