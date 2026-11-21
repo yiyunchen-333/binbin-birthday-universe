@@ -32,7 +32,7 @@
   inset: 0;
   z-index: 0;
   background: #120208 var(--nebula) center / cover no-repeat;
-  filter: contrast(1.1) brightness(0.74) saturate(0.85);
+  filter: contrast(1.1) brightness(0.6) saturate(0.9);
 }
 
 .page3-wine,
@@ -43,15 +43,15 @@
 }
 
 .page3-wine {
-  background: #7a2240;
+  background: #d47898;
   mix-blend-mode: color;
   opacity: 1;
 }
 
 .page3-depth {
-  background: #4a1020;
+  background: #5c2034;
   mix-blend-mode: multiply;
-  opacity: 0.42;
+  opacity: 0.52;
 }
 
 .page3-orbits {
