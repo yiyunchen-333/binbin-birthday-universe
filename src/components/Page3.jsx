@@ -244,6 +244,15 @@ const PLANETS = [1, 2, 3, 4, 5, 6].map((id) => ({
   note: NOTES[id - 1],
 }))
 
+function warmImage(src) {
+  const image = new Image()
+  image.decoding = 'async'
+  image.src = src
+}
+
+warmImage(assetUrl('assets/rose.png'))
+PLANETS.forEach((planet) => warmImage(planet.src))
+
 function Planet({ planet, radius, squash, onOpen }) {
   const delay = `${-((planet.id - 1) / PLANETS.length) * ORBIT_SECONDS}s`
 
@@ -270,7 +279,7 @@ function Planet({ planet, radius, squash, onOpen }) {
                   onClick={() => onOpen(planet.id)}
                 >
                   <span className="planet-no">{String(planet.id).padStart(2, '0')}</span>
-                  <img src={planet.src} alt="" draggable="false" />
+                  <img src={planet.src} alt="" decoding="async" draggable="false" />
                   <span className="planet-note">{planet.note}</span>
                 </button>
               </div>
@@ -313,44 +322,68 @@ export function Page3() {
   }, [])
 
   useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return undefined
     const move = (event) => paintCursor(event.clientX, event.clientY)
     const hide = () => paintCursor(-80, -80)
+    const markHot = (planet) => {
+      stage.querySelectorAll('.planet.is-hot').forEach((el) => {
+        if (el !== planet) el.classList.remove('is-hot')
+      })
+      planet?.classList.add('is-hot')
+      cursorRef.current?.querySelector('.page3-cursor-body')?.classList.toggle('is-hot', Boolean(planet))
+    }
+    const over = (event) => {
+      const planet = event.target instanceof Element ? event.target.closest('.planet') : null
+      if (planet) markHot(planet)
+    }
+    const out = (event) => {
+      const planet = event.target instanceof Element ? event.target.closest('.planet') : null
+      if (!planet) return
+      const next = event.relatedTarget instanceof Element ? event.relatedTarget.closest('.planet') : null
+      if (next !== planet) markHot(next)
+    }
     window.addEventListener('pointermove', move)
     window.addEventListener('blur', hide)
     document.addEventListener('mouseleave', hide)
+    stage.addEventListener('pointerover', over)
+    stage.addEventListener('pointerout', out)
     return () => {
       window.removeEventListener('pointermove', move)
       window.removeEventListener('blur', hide)
       document.removeEventListener('mouseleave', hide)
+      stage.removeEventListener('pointerover', over)
+      stage.removeEventListener('pointerout', out)
     }
   }, [paintCursor])
 
   useEffect(() => {
     const plane = (PLANE * Math.PI) / 180
+    const started = performance.now()
     let frame = 0
+    let slots = []
+    const sides = new Map()
     const loop = () => {
-      const { x, y } = pointRef.current
-      const hit = x >= 0 ? document.elementFromPoint(x, y) : null
-      const hovered = hit instanceof Element ? hit.closest('.planet') : null
-      document.querySelectorAll('.planet.is-hot').forEach((el) => {
-        if (el !== hovered) el.classList.remove('is-hot')
-      })
-      if (hovered) hovered.classList.add('is-hot')
-      const body = cursorRef.current?.querySelector('.page3-cursor-body')
-      if (body) body.classList.toggle('is-hot', Boolean(hovered))
-
-      const turns = performance.now() / 1000 / ORBIT_SECONDS
-      const stage = stageRef.current?.getBoundingClientRect()
-      document.querySelectorAll('.planet-slot').forEach((slot) => {
+      if (slots.length === 0 || !slots[0].isConnected) {
+        slots = [...(stageRef.current?.querySelectorAll('.planet-slot') ?? [])]
+        sides.clear()
+      }
+      const turns = (performance.now() - started) / 1000 / ORBIT_SECONDS
+      const { w, h } = sizeRef.current
+      const squash = w > 0 ? (h * PLANET_PATH.ry) / (w * PLANET_PATH.rx) : 1
+      slots.forEach((slot) => {
         const phase = Number(slot.dataset.phase)
         const angle = phase + turns * Math.PI * 2
         const yr = Math.cos(angle) * Math.sin(plane) + Math.sin(angle) * Math.cos(plane)
-        slot.style.zIndex = yr > 0 ? '5' : '2'
-        const planet = slot.querySelector('.planet')
-        if (!planet || !stage) return
-        const rect = planet.getBoundingClientRect()
-        const onRight = rect.left + rect.width / 2 > stage.left + stage.width / 2
-        planet.classList.toggle('note-left', onRight)
+        const z = yr > 0 ? '5' : '2'
+        if (slot.style.zIndex !== z) slot.style.zIndex = z
+        const x = Math.cos(angle)
+        const y = Math.sin(angle) * squash
+        const onRight = x * Math.cos(plane) - y * Math.sin(plane) > 0
+        if (sides.get(slot) !== onRight) {
+          sides.set(slot, onRight)
+          slot.querySelector('.planet')?.classList.toggle('note-left', onRight)
+        }
       })
       frame = requestAnimationFrame(loop)
     }
@@ -361,10 +394,12 @@ export function Page3() {
   return (
     <section className="page3" aria-label="Page 3">
       <div className="page3-stage" ref={stageRef}>
-        <div className="page3-bg" aria-hidden="true" />
-        <div className="page3-wine" aria-hidden="true" />
-        <div className="page3-depth" aria-hidden="true" />
-        <div className="page3-shade" aria-hidden="true" />
+        <div className="page3-sky" aria-hidden="true">
+          <div className="page3-bg" />
+          <div className="page3-wine" />
+          <div className="page3-depth" />
+          <div className="page3-shade" />
+        </div>
 
         {size.w > 0 && (
           <svg className="page3-orbits" viewBox={`0 0 ${size.w} ${size.h}`} aria-hidden="true">
@@ -383,7 +418,7 @@ export function Page3() {
 
         <div className="rose-wrap">
           <div className="rose-glow" aria-hidden="true" />
-          <img className="rose" src={assetUrl('assets/rose.png')} alt="" draggable="false" />
+          <img className="rose" src={assetUrl('assets/rose.png')} alt="" decoding="async" fetchPriority="high" draggable="false" />
         </div>
 
         {size.w > 0 &&
