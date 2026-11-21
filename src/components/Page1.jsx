@@ -22,17 +22,9 @@ export function Page1() {
           aria-hidden="true"
           initial={false}
           animate={{
-            filter: bursting
-              ? [
-                  'blur(8px) contrast(1.02) brightness(1.05) saturate(0.95)',
-                  'blur(6px) contrast(1.08) brightness(0.42) saturate(0.55)',
-                  'blur(4px) contrast(1.08) brightness(0.34) saturate(0.4)',
-                ]
-              : 'blur(8px) contrast(1.02) brightness(1.05) saturate(0.95)',
+            filter: 'blur(5px) contrast(1.08) brightness(0.46) saturate(0.5)',
           }}
-          transition={
-            bursting ? { duration: 3.5, times: [0, 0.5 / 3.5, 1], ease: 'linear' } : { duration: 0 }
-          }
+          transition={{ duration: 0 }}
         />
         <div className="page1-veil" aria-hidden="true" />
         <div className="page1-grade" aria-hidden="true" />

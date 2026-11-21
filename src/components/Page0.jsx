@@ -55,6 +55,7 @@ export function Page0() {
         <div className="page0-bg" aria-hidden="true" />
         <div className="page0-wine" aria-hidden="true" />
         <div className="page0-dim" aria-hidden="true" />
+        <div className="page0-depth" aria-hidden="true" />
 
         <form className="page0-card" onSubmit={submit}>
           <p className="page0-kicker">验证通过：</p>
