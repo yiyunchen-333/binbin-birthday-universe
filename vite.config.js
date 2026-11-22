@@ -27,7 +27,7 @@ function copyNebulaBackground() {
 }
 
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
     {
       name: 'copy-nebula-background',
